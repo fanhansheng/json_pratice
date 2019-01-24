@@ -1,0 +1,520 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - gcov.info - /Users/siwangqishi/Desktop/learn/learnunix/c++gtest/json/json.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../../../index.html">top level</a> - <a href="index.html">Users/siwangqishi/Desktop/learn/learnunix/c++gtest/json</a> - json.cpp<span style="font-size: 80%;"> (source / <a href="json.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">gcov.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">142</td>
+            <td class="headerCovTableEntry">158</td>
+            <td class="headerCovTableEntryMed">89.9 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-01-24 16:19:02</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">17</td>
+            <td class="headerCovTableEntry">17</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;json.h&quot;</a>
+<span class="lineNum">       2 </span>            : using namespace std;
+<span class="lineNum">       3 </span>            : const JSON *json_get_value(const JSON *json, const char *key)
+<span class="lineNum">       4 </span>            : {
+<span class="lineNum">       5 </span><span class="lineCov">         30 :         assert(json!=NULL);</span>
+<span class="lineNum">       6 </span><span class="lineCov">         30 :         assert(key!=NULL);</span>
+<span class="lineNum">       7 </span><span class="lineCov">         30 :         assert(json-&gt;type==JSON_OBJ);</span>
+<span class="lineNum">       8 </span><span class="lineCov">         30 :         assert(json-&gt;TYPE.obj!=NULL);</span>
+<span class="lineNum">       9 </span><span class="lineCov">         74 :         for(int i=0;i&lt;json-&gt;TYPE.obj-&gt;pair.size();++i)</span>
+<span class="lineNum">      10 </span>            :         {
+<span class="lineNum">      11 </span><span class="lineCov">         34 :                 if(strcmp(json-&gt;TYPE.obj-&gt;pair[i]-&gt;key, key)==0)</span>
+<span class="lineNum">      12 </span><span class="lineCov">         12 :                         return json-&gt;TYPE.obj-&gt;pair[i]-&gt;val;</span>
+<span class="lineNum">      13 </span><span class="lineCov">         22 :         }</span>
+<a name="14"><span class="lineNum">      14 </span><span class="lineCov">          3 :         return NULL;</span></a>
+<span class="lineNum">      15 </span><span class="lineCov">         15 : }</span>
+<span class="lineNum">      16 </span>            : const JSON *json_get_index(const JSON *json, U32 idx)
+<span class="lineNum">      17 </span>            : {
+<span class="lineNum">      18 </span><span class="lineCov">          4 :         assert(json!=NULL);</span>
+<span class="lineNum">      19 </span><span class="lineCov">          4 :         assert(idx&gt;=0);</span>
+<span class="lineNum">      20 </span><span class="lineCov">          4 :         assert(json-&gt;type==JSON_ARRAY); </span>
+<span class="lineNum">      21 </span><span class="lineCov">          4 :         assert(json-&gt;TYPE.arr!=NULL);   </span>
+<span class="lineNum">      22 </span><span class="lineCov">          2 :         if(json-&gt;TYPE.arr-&gt;val.size()&gt;idx)</span>
+<span class="lineNum">      23 </span><span class="lineCov">          1 :                 return json-&gt;TYPE.arr-&gt;val[idx];</span>
+<span class="lineNum">      24 </span><span class="lineCov">          1 :         return NULL;</span>
+<a name="25"><span class="lineNum">      25 </span><span class="lineCov">          2 : }</span></a>
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : int json_get_int(const JSON *json, const char *key, int def)
+<span class="lineNum">      28 </span>            : {
+<span class="lineNum">      29 </span><span class="lineCov">          4 :         assert(json!=NULL);</span>
+<span class="lineNum">      30 </span><span class="lineCov">          4 :         assert(key!=NULL);</span>
+<span class="lineNum">      31 </span><span class="lineCov">          2 :         const JSON *p=json_get_value(json,key);</span>
+<span class="lineNum">      32 </span><span class="lineCov">          3 :         if(p==NULL||p-&gt;type!=JSON_INT)</span>
+<span class="lineNum">      33 </span><span class="lineCov">          1 :                 return def;</span>
+<a name="34"><span class="lineNum">      34 </span><span class="lineCov">          1 :         return p-&gt;TYPE.num;</span></a>
+<span class="lineNum">      35 </span><span class="lineCov">          2 : }</span>
+<span class="lineNum">      36 </span>            : BOOL json_get_bool(const JSON *json, const char *key)
+<span class="lineNum">      37 </span>            : {
+<span class="lineNum">      38 </span><span class="lineCov">          4 :         assert(json!=NULL);</span>
+<span class="lineNum">      39 </span><span class="lineCov">          4 :         assert(key!=NULL);</span>
+<span class="lineNum">      40 </span><span class="lineCov">          2 :         const JSON *p=json_get_value(json,key);</span>
+<span class="lineNum">      41 </span><span class="lineCov">          3 :         if(p==NULL||p-&gt;type!=JSON_BOOL)</span>
+<span class="lineNum">      42 </span><span class="lineCov">          1 :                 return false;</span>
+<a name="43"><span class="lineNum">      43 </span><span class="lineCov">          1 :         return p-&gt;TYPE.bol;</span></a>
+<span class="lineNum">      44 </span><span class="lineCov">          2 : }</span>
+<span class="lineNum">      45 </span>            : const char *json_get_str(const JSON *json, const char *key, const char *def)
+<span class="lineNum">      46 </span>            : {
+<span class="lineNum">      47 </span><span class="lineCov">          4 :         assert(json!=NULL);</span>
+<span class="lineNum">      48 </span><span class="lineCov">          4 :         assert(key!=NULL);</span>
+<span class="lineNum">      49 </span><span class="lineCov">          2 :         const JSON *p=json_get_value(json,key);</span>
+<span class="lineNum">      50 </span><span class="lineCov">          3 :         if(p==NULL||p-&gt;type!=JSON_STR)</span>
+<span class="lineNum">      51 </span><span class="lineCov">          1 :                 return def;</span>
+<span class="lineNum">      52 </span><span class="lineCov">          1 :         return p-&gt;TYPE.str;</span>
+<a name="53"><span class="lineNum">      53 </span><span class="lineCov">          2 : }</span></a>
+<span class="lineNum">      54 </span>            : 
+<span class="lineNum">      55 </span>            : const keyvalue* json_new_keyvalue(const char *key, JSON *val)
+<span class="lineNum">      56 </span>            : {
+<span class="lineNum">      57 </span><span class="lineCov">         10 :     assert(key!=NULL);</span>
+<span class="lineNum">      58 </span><span class="lineCov">         10 :     assert(val!=NULL);</span>
+<span class="lineNum">      59 </span><span class="lineCov">          5 :      keyvalue *p=new keyvalue();</span>
+<span class="lineNum">      60 </span><span class="lineCov">          5 :      p-&gt;key=strdup(key);</span>
+<span class="lineNum">      61 </span><span class="lineCov">          5 :      p-&gt;val=val;</span>
+<a name="62"><span class="lineNum">      62 </span><span class="lineCov">          5 :      return p;</span></a>
+<span class="lineNum">      63 </span>            : }
+<span class="lineNum">      64 </span>            : const JSON* json_new_int(int val)
+<span class="lineNum">      65 </span>            : {
+<span class="lineNum">      66 </span><span class="lineCov">          4 :         JSON *p=new JSON();</span>
+<span class="lineNum">      67 </span><span class="lineCov">          4 :     p-&gt;type=JSON_INT;</span>
+<span class="lineNum">      68 </span><span class="lineCov">          4 :     p-&gt;TYPE.num=val;</span>
+<a name="69"><span class="lineNum">      69 </span><span class="lineCov">          4 :         return p;</span></a>
+<span class="lineNum">      70 </span>            : }
+<span class="lineNum">      71 </span>            : const JSON* json_new_bool(bool val)
+<span class="lineNum">      72 </span>            : {
+<span class="lineNum">      73 </span><span class="lineCov">          4 :     JSON *p=new JSON();</span>
+<span class="lineNum">      74 </span><span class="lineCov">          4 :     p-&gt;type=JSON_BOOL;</span>
+<span class="lineNum">      75 </span><span class="lineCov">          4 :     p-&gt;TYPE.bol=val;</span>
+<a name="76"><span class="lineNum">      76 </span><span class="lineCov">          4 :     return p;</span></a>
+<span class="lineNum">      77 </span>            : }
+<span class="lineNum">      78 </span>            : const JSON* json_new_str(char* val)
+<span class="lineNum">      79 </span>            : {
+<span class="lineNum">      80 </span><span class="lineCov">          6 :     assert(val!=NULL);</span>
+<span class="lineNum">      81 </span><span class="lineCov">          3 :     JSON *p=new JSON();</span>
+<span class="lineNum">      82 </span><span class="lineCov">          3 :     p-&gt;type=JSON_STR;</span>
+<span class="lineNum">      83 </span><span class="lineCov">          3 :     p-&gt;TYPE.str=strdup(val);</span>
+<a name="84"><span class="lineNum">      84 </span><span class="lineCov">          3 :     return p;</span></a>
+<span class="lineNum">      85 </span>            : }
+<span class="lineNum">      86 </span>            : const JSON* json_new_array()
+<span class="lineNum">      87 </span>            : {
+<span class="lineNum">      88 </span><span class="lineCov">          8 :     JSON *p=new JSON();</span>
+<span class="lineNum">      89 </span><span class="lineCov">          4 :     p-&gt;type=JSON_ARRAY;</span>
+<span class="lineNum">      90 </span><span class="lineCov">          4 :     p-&gt;TYPE.arr=new Array();</span>
+<a name="91"><span class="lineNum">      91 </span><span class="lineCov">          4 :     return p;</span></a>
+<span class="lineNum">      92 </span>            : }
+<span class="lineNum">      93 </span>            : const JSON* json_new_object()
+<span class="lineNum">      94 </span>            : {
+<span class="lineNum">      95 </span><span class="lineCov">          8 :     JSON *p=new JSON();</span>
+<span class="lineNum">      96 </span><span class="lineCov">          4 :     p-&gt;type=JSON_OBJ;</span>
+<span class="lineNum">      97 </span><span class="lineCov">          4 :     p-&gt;TYPE.obj=new object();</span>
+<a name="98"><span class="lineNum">      98 </span><span class="lineCov">          4 :     return p;</span></a>
+<span class="lineNum">      99 </span>            : }
+<span class="lineNum">     100 </span>            : BOOL json_set_int(JSON *json, const char *key, int val)
+<span class="lineNum">     101 </span>            : {
+<span class="lineNum">     102 </span><span class="lineCov">          2 :     assert(json!=NULL);</span>
+<span class="lineNum">     103 </span><span class="lineCov">          2 :     assert(key!=NULL);</span>
+<span class="lineNum">     104 </span><span class="lineCov">          1 :     JSON *p=new JSON();</span>
+<span class="lineNum">     105 </span><span class="lineCov">          1 :     p=NULL;</span>
+<span class="lineNum">     106 </span><span class="lineCov">          1 :     p=(JSON *)json_get_value(json, key);</span>
+<span class="lineNum">     107 </span><span class="lineCov">          1 :     if(p==NULL)</span>
+<span class="lineNum">     108 </span><span class="lineNoCov">          0 :         return false;</span>
+<span class="lineNum">     109 </span><span class="lineCov">          1 :     p-&gt;TYPE.num=val;</span>
+<span class="lineNum">     110 </span><span class="lineCov">          1 :     return true;</span>
+<a name="111"><span class="lineNum">     111 </span><span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     112 </span>            : 
+<span class="lineNum">     113 </span>            : BOOL json_set_bool(JSON *json, const char *key, BOOL val)
+<span class="lineNum">     114 </span>            : {
+<span class="lineNum">     115 </span><span class="lineCov">          2 :         assert(json!=NULL);</span>
+<span class="lineNum">     116 </span><span class="lineCov">          2 :         assert(key!=NULL);</span>
+<span class="lineNum">     117 </span><span class="lineCov">          1 :         JSON *p=(JSON *)json_get_value(json,key);</span>
+<span class="lineNum">     118 </span><span class="lineCov">          1 :         if(p==NULL)</span>
+<span class="lineNum">     119 </span><span class="lineNoCov">          0 :                 return false;</span>
+<span class="lineNum">     120 </span><span class="lineCov">          1 :         p-&gt;TYPE.bol=val;</span>
+<a name="121"><span class="lineNum">     121 </span><span class="lineCov">          1 :         return true;</span></a>
+<span class="lineNum">     122 </span><span class="lineCov">          1 : }</span>
+<span class="lineNum">     123 </span>            : BOOL json_set_str(JSON *json, const char *key, const char *val)
+<span class="lineNum">     124 </span>            : {
+<span class="lineNum">     125 </span><span class="lineCov">          2 :         assert(json!=NULL);</span>
+<span class="lineNum">     126 </span><span class="lineCov">          2 :         assert(key!=NULL);</span>
+<span class="lineNum">     127 </span><span class="lineCov">          1 :         JSON *p=(JSON *)json_get_value(json,key);</span>
+<span class="lineNum">     128 </span><span class="lineCov">          1 :         if(p==NULL)</span>
+<span class="lineNum">     129 </span><span class="lineNoCov">          0 :          return false;</span>
+<span class="lineNum">     130 </span><span class="lineCov">          1 :         p-&gt;TYPE.str=strdup(val);</span>
+<span class="lineNum">     131 </span><span class="lineCov">          1 :         return true;</span>
+<span class="lineNum">     132 </span><span class="lineCov">          1 : }</span>
+<span class="lineNum">     133 </span>            : /*
+<span class="lineNum">     134 </span>            : const keyvalue *json_add_keyvalue(const JSON *json)
+<span class="lineNum">     135 </span>            : {
+<span class="lineNum">     136 </span>            :         assert(json!=NULL);
+<span class="lineNum">     137 </span>            :         keyvalue *key_val=NULL;
+<span class="lineNum">     138 </span>            :         key_val-&gt;val=NULL;
+<span class="lineNum">     139 </span>            :         char key[MAXN];
+<span class="lineNum">     140 </span>            :         printf(&quot;请输入key\n&quot;);
+<span class="lineNum">     141 </span>            :         scanf(&quot;%s&quot;, key);
+<span class="lineNum">     142 </span>            :         U32 len=strlen(key);
+<span class="lineNum">     143 </span>            :         key_val-&gt;key=new char[len+1];
+<span class="lineNum">     144 </span>            :         memcpy(key_val-&gt;key, key, len);
+<span class="lineNum">     145 </span>            :         key_val-&gt;key[len]='\0';
+<span class="lineNum">     146 </span>            :         return key_val;
+<a name="147"><span class="lineNum">     147 </span>            : }</a>
+<span class="lineNum">     148 </span>            : */
+<span class="lineNum">     149 </span>            : const JSON *json_add_value(const value *val)
+<span class="lineNum">     150 </span>            : {
+<span class="lineNum">     151 </span><span class="lineCov">          5 :         JSON *p=NULL;</span>
+<span class="lineNum">     152 </span><span class="lineCov">          5 :         p=new JSON();</span>
+<span class="lineNum">     153 </span><span class="lineCov">          5 :         const int type = val-&gt;type;</span>
+<span class="lineNum">     154 </span><span class="lineCov">          5 :         switch(type)</span>
+<span class="lineNum">     155 </span>            :         {
+<span class="lineNum">     156 </span>            :                 case JSON_INT:
+<span class="lineNum">     157 </span>            :                         {
+<span class="lineNum">     158 </span><span class="lineCov">          1 :                                 p-&gt;type=JSON_INT;</span>
+<span class="lineNum">     159 </span><span class="lineCov">          1 :                                 p-&gt;TYPE.num=val-&gt;TYPE.num;</span>
+<span class="lineNum">     160 </span><span class="lineCov">          1 :                                 break;</span>
+<span class="lineNum">     161 </span>            :                         }
+<span class="lineNum">     162 </span>            :                 case JSON_BOOL:
+<span class="lineNum">     163 </span>            :                         {
+<span class="lineNum">     164 </span><span class="lineCov">          1 :                                 p-&gt;type=JSON_BOOL;</span>
+<span class="lineNum">     165 </span><span class="lineCov">          1 :                                 p-&gt;TYPE.bol=val-&gt;TYPE.bol;</span>
+<span class="lineNum">     166 </span><span class="lineCov">          1 :                                 break;</span>
+<span class="lineNum">     167 </span>            :                         }
+<span class="lineNum">     168 </span>            :                 case JSON_STR:
+<span class="lineNum">     169 </span>            :                         {
+<span class="lineNum">     170 </span><span class="lineCov">          1 :                                 p-&gt;type=JSON_STR;</span>
+<span class="lineNum">     171 </span><span class="lineCov">          1 :                                 U32 len=strlen(val-&gt;TYPE.str);</span>
+<span class="lineNum">     172 </span><span class="lineCov">          1 :                                 p-&gt;TYPE.str=new char[len+1];</span>
+<span class="lineNum">     173 </span><span class="lineCov">          1 :                                 memcpy(p-&gt;TYPE.str,val-&gt;TYPE.str, len);</span>
+<span class="lineNum">     174 </span><span class="lineCov">          1 :                                 p-&gt;TYPE.str[len]='\0';</span>
+<span class="lineNum">     175 </span><span class="lineCov">          1 :                                 break;</span>
+<span class="lineNum">     176 </span>            :                         }
+<span class="lineNum">     177 </span>            :                 case JSON_ARRAY:
+<span class="lineNum">     178 </span>            :                         {
+<span class="lineNum">     179 </span><span class="lineCov">          1 :                                 p-&gt;type=JSON_ARRAY;</span>
+<span class="lineNum">     180 </span><span class="lineCov">          1 :                                 p-&gt;TYPE.arr=new Array();</span>
+<span class="lineNum">     181 </span><span class="lineCov">          2 :                                 for(int i=0;i&lt;val-&gt;TYPE.arr-&gt;val.size();++i)</span>
+<span class="lineNum">     182 </span>            :                                 {
+<span class="lineNum">     183 </span><span class="lineNoCov">          0 :                                         p-&gt;TYPE.arr-&gt;val.push_back(val-&gt;TYPE.arr-&gt;val[i]);</span>
+<span class="lineNum">     184 </span><span class="lineNoCov">          0 :                                 }</span>
+<span class="lineNum">     185 </span><span class="lineCov">          1 :                                 break;</span>
+<span class="lineNum">     186 </span>            :                         }
+<span class="lineNum">     187 </span>            :                 case JSON_OBJ:
+<span class="lineNum">     188 </span>            :                         {
+<span class="lineNum">     189 </span><span class="lineCov">          1 :                                 p-&gt;type=JSON_OBJ;</span>
+<span class="lineNum">     190 </span><span class="lineCov">          1 :                                 p-&gt;TYPE.obj=new object();</span>
+<span class="lineNum">     191 </span><span class="lineCov">          2 :                                 for(int i=0;i&lt;val-&gt;TYPE.obj-&gt;pair.size();++i)</span>
+<span class="lineNum">     192 </span>            :                                 {
+<span class="lineNum">     193 </span><span class="lineNoCov">          0 :                                         p-&gt;TYPE.obj-&gt;pair.push_back(val-&gt;TYPE.obj-&gt;pair[i]);</span>
+<span class="lineNum">     194 </span><span class="lineNoCov">          0 :                                 }</span>
+<span class="lineNum">     195 </span><span class="lineCov">          1 :                                 break;</span>
+<span class="lineNum">     196 </span>            :                         }
+<span class="lineNum">     197 </span>            :                 default:{
+<span class="lineNum">     198 </span><span class="lineNoCov">          0 :                                 perror(&quot;wrong type\n&quot;);</span>
+<span class="lineNum">     199 </span><span class="lineNoCov">          0 :                                 break;</span>
+<span class="lineNum">     200 </span>            :                         }
+<span class="lineNum">     201 </span>            :         }
+<a name="202"><span class="lineNum">     202 </span><span class="lineCov">          5 :         return p;</span></a>
+<span class="lineNum">     203 </span>            : }
+<span class="lineNum">     204 </span>            : const JSON *json_create()
+<span class="lineNum">     205 </span>            : {
+<span class="lineNum">     206 </span><span class="lineCov">          2 :         JSON *p=NULL;</span>
+<span class="lineNum">     207 </span><span class="lineCov">          1 :         p=new JSON();</span>
+<span class="lineNum">     208 </span><span class="lineCov">          1 :         p-&gt;type=JSON_OBJ;</span>
+<span class="lineNum">     209 </span><span class="lineCov">          1 :         p-&gt;TYPE.obj=NULL;</span>
+<span class="lineNum">     210 </span><span class="lineCov">          1 :         return p;</span>
+<a name="211"><span class="lineNum">     211 </span>            : }</a>
+<span class="lineNum">     212 </span>            : //优先级不高 先不考虑
+<span class="lineNum">     213 </span>            : BOOL json_free(JSON *json)
+<span class="lineNum">     214 </span>            : {
+<span class="lineNum">     215 </span><span class="lineCov">         10 :         int type=json-&gt;type;</span>
+<span class="lineNum">     216 </span><span class="lineCov">         10 :         switch(type)</span>
+<span class="lineNum">     217 </span>            :         {
+<span class="lineNum">     218 </span><span class="lineNoCov">          0 :         case NOTDEFINE: delete(json); break;</span>
+<span class="lineNum">     219 </span><span class="lineCov">          6 :                 case JSON_INT: delete(json);break;</span>
+<span class="lineNum">     220 </span><span class="lineCov">          6 :                 case JSON_BOOL: delete(json);break;</span>
+<span class="lineNum">     221 </span><span class="lineCov">          3 :                 case JSON_STR: delete(json);break;</span>
+<span class="lineNum">     222 </span>            :                 case JSON_ARRAY:{
+<span class="lineNum">     223 </span><span class="lineCov">          2 :                                         if(json-&gt;TYPE.arr==NULL)</span>
+<span class="lineNum">     224 </span>            :                                         {
+<span class="lineNum">     225 </span><span class="lineNoCov">          0 :                                                 delete(json);</span>
+<span class="lineNum">     226 </span><span class="lineNoCov">          0 :                                                 break;</span>
+<span class="lineNum">     227 </span>            :                                         } 
+<span class="lineNum">     228 </span><span class="lineCov">          8 :                                         for(int i=0;i&lt;json-&gt;TYPE.arr-&gt;val.size();++i)</span>
+<span class="lineNum">     229 </span>            :                                         {
+<span class="lineNum">     230 </span><span class="lineCov">          2 :                                                 json_free(json-&gt;TYPE.arr-&gt;val[i]);</span>
+<span class="lineNum">     231 </span><span class="lineCov">          2 :                                         }</span>
+<span class="lineNum">     232 </span><span class="lineCov">          4 :                                         delete(json-&gt;TYPE.arr);</span>
+<span class="lineNum">     233 </span><span class="lineCov">          4 :                                         delete(json);</span>
+<span class="lineNum">     234 </span><span class="lineCov">          2 :                     break;</span>
+<span class="lineNum">     235 </span>            :                                 }
+<span class="lineNum">     236 </span>            :                 case JSON_OBJ:{
+<span class="lineNum">     237 </span><span class="lineCov">          3 :                                       if(json-&gt;TYPE.obj==NULL)</span>
+<span class="lineNum">     238 </span>            :                                       {
+<span class="lineNum">     239 </span><span class="lineCov">          2 :                                               delete(json);</span>
+<span class="lineNum">     240 </span><span class="lineCov">          1 :                                               break;</span>
+<span class="lineNum">     241 </span>            :                                       }
+<span class="lineNum">     242 </span><span class="lineCov">          4 :                                       for(int i=0;i&lt;json-&gt;TYPE.obj-&gt;pair.size();++i)</span>
+<span class="lineNum">     243 </span>            :                                       {
+<span class="lineNum">     244 </span><span class="lineNoCov">          0 :                                               json_free(json-&gt;TYPE.obj-&gt;pair[i]-&gt;val);</span>
+<span class="lineNum">     245 </span><span class="lineNoCov">          0 :                                       }</span>
+<span class="lineNum">     246 </span><span class="lineCov">          4 :                                       delete(json-&gt;TYPE.obj);</span>
+<span class="lineNum">     247 </span><span class="lineCov">          4 :                                       delete(json);</span>
+<span class="lineNum">     248 </span><span class="lineCov">          2 :                       break;</span>
+<span class="lineNum">     249 </span>            :                               }
+<span class="lineNum">     250 </span>            :                 default:{
+<span class="lineNum">     251 </span><span class="lineNoCov">          0 :                                 perror(&quot;error TYPE\n&quot;);</span>
+<span class="lineNum">     252 </span><span class="lineNoCov">          0 :                                 return false;</span>
+<span class="lineNum">     253 </span>            :                         }
+<span class="lineNum">     254 </span>            :         }
+<span class="lineNum">     255 </span><span class="lineCov">         10 :         json-&gt;TYPE.obj=NULL;</span>
+<span class="lineNum">     256 </span><span class="lineCov">         10 :         json=NULL;</span>
+<span class="lineNum">     257 </span><span class="lineCov">         10 :         return true;</span>
+<span class="lineNum">     258 </span><span class="lineCov">         10 : }</span>
+<span class="lineNum">     259 </span>            : /*
+<span class="lineNum">     260 </span>            : const JSON *make_value(JSON *json)
+<span class="lineNum">     261 </span>            : {
+<span class="lineNum">     262 </span>            :         int type, num, bol;
+<span class="lineNum">     263 </span>            :         char key[MAXN];
+<span class="lineNum">     264 </span>            :         JSON *p=new JSON();
+<span class="lineNum">     265 </span>            :         printf(&quot;input type\n&quot;);
+<span class="lineNum">     266 </span>            :         scanf(&quot;%d&quot;, &amp;type);
+<span class="lineNum">     267 </span>            :         switch(type)
+<span class="lineNum">     268 </span>            :         {
+<span class="lineNum">     269 </span>            :                 case JSON_INT:
+<span class="lineNum">     270 </span>            :                         {p-&gt;type=JSON_INT;
+<span class="lineNum">     271 </span>            :                                 printf(&quot;input num\n&quot;);
+<span class="lineNum">     272 </span>            :                                 scanf(&quot;%d&quot;, &amp;num);
+<span class="lineNum">     273 </span>            :                                 p-&gt;TYPE.num=num;break;
+<span class="lineNum">     274 </span>            :                         }case JSON_BOOL:
+<span class="lineNum">     275 </span>            :                         {printf(&quot;input bool\n&quot;);
+<span class="lineNum">     276 </span>            :                                 p-&gt;type=JSON_BOOL;
+<span class="lineNum">     277 </span>            :                                 scanf(&quot;%d&quot;, &amp;bol);
+<span class="lineNum">     278 </span>            :                                 p-&gt;TYPE.bol=bol;break;
+<span class="lineNum">     279 </span>            :                         }case JSON_STR:
+<span class="lineNum">     280 </span>            :                         {printf(&quot;input str\n&quot;);
+<span class="lineNum">     281 </span>            :                                 p-&gt;type=JSON_STR;
+<span class="lineNum">     282 </span>            :                                 scanf(&quot;%s&quot;, key);
+<span class="lineNum">     283 </span>            :                                 int len=strlen(key);
+<span class="lineNum">     284 </span>            :                                 p-&gt;TYPE.str=new char[len+1];
+<span class="lineNum">     285 </span>            :                                 memcpy(p-&gt;TYPE.str,key, len);
+<span class="lineNum">     286 </span>            :                                 p-&gt;TYPE.str[len]='\0';
+<span class="lineNum">     287 </span>            :                                 break;
+<span class="lineNum">     288 </span>            :                         }case JSON_ARRAY:
+<span class="lineNum">     289 </span>            :                         {printf(&quot;input array\n&quot;);
+<span class="lineNum">     290 </span>            :                                 p-&gt;type=JSON_ARRAY;
+<span class="lineNum">     291 </span>            :                                 if(p-&gt;TYPE.arr==NULL)
+<span class="lineNum">     292 </span>            :                                         p-&gt;TYPE.arr=new Array();
+<span class="lineNum">     293 </span>            :                                 int n;
+<span class="lineNum">     294 </span>            :                                 scanf(&quot;%d&quot;, &amp;n);
+<span class="lineNum">     295 </span>            :                                 for(int i=0;i&lt;n;++i)
+<span class="lineNum">     296 </span>            :                                 {
+<span class="lineNum">     297 </span>            :                                         p-&gt;TYPE.arr-&gt;val.push_back((JSON *)make_value(json));
+<span class="lineNum">     298 </span>            :                                 }
+<span class="lineNum">     299 </span>            :                                 break;
+<span class="lineNum">     300 </span>            :                         }
+<span class="lineNum">     301 </span>            :                 case JSON_OBJ:
+<span class="lineNum">     302 </span>            :                         {
+<span class="lineNum">     303 </span>            :                                 printf(&quot;input OBJ\n&quot;);
+<span class="lineNum">     304 </span>            :                                 p-&gt;type=JSON_OBJ;
+<span class="lineNum">     305 </span>            :                                 if(p-&gt;TYPE.obj==NULL)
+<span class="lineNum">     306 </span>            :                                         p-&gt;TYPE.obj=new object();
+<span class="lineNum">     307 </span>            :                                 keyvalue *key_val=new keyvalue();
+<span class="lineNum">     308 </span>            :                                 scanf(&quot;%s&quot;, key); 
+<span class="lineNum">     309 </span>            :                                 U32 len=strlen(key);
+<span class="lineNum">     310 </span>            :                                 key_val-&gt;key=new char[len+1];
+<span class="lineNum">     311 </span>            :                                 memcpy(key_val-&gt;key, key, len);
+<span class="lineNum">     312 </span>            :                                 key_val-&gt;key[len]='\0'; 
+<span class="lineNum">     313 </span>            :                                 key_val-&gt;val=(JSON *)make_value(json);
+<span class="lineNum">     314 </span>            :                                 p-&gt;TYPE.obj-&gt;pair.push_back(key_val);
+<span class="lineNum">     315 </span>            :                                 break;
+<span class="lineNum">     316 </span>            :                         }
+<span class="lineNum">     317 </span>            :                 default:{
+<span class="lineNum">     318 </span>            :                                 perror(&quot;wrong type\n&quot;);
+<span class="lineNum">     319 </span>            :                                 break;
+<span class="lineNum">     320 </span>            :                         }
+<span class="lineNum">     321 </span>            :         }
+<span class="lineNum">     322 </span>            :         return p;
+<span class="lineNum">     323 </span>            : }
+<span class="lineNum">     324 </span>            : void dfs_print(const JSON* json, int step)
+<span class="lineNum">     325 </span>            : {
+<span class="lineNum">     326 </span>            :         assert(json != NULL);
+<span class="lineNum">     327 </span>            :         int type = json-&gt;type;
+<span class="lineNum">     328 </span>            : 
+<span class="lineNum">     329 </span>            :         if(type == JSON_BOOL)
+<span class="lineNum">     330 </span>            :         {
+<span class="lineNum">     331 </span>            :                 printf(&quot;%s&quot;, json-&gt;TYPE.bol ? &quot;true&quot; : &quot;false&quot;);
+<span class="lineNum">     332 </span>            :         }
+<span class="lineNum">     333 </span>            :         if(type == JSON_INT)
+<span class="lineNum">     334 </span>            :         {
+<span class="lineNum">     335 </span>            :                 printf(&quot;%d&quot;, json-&gt;TYPE.num);
+<span class="lineNum">     336 </span>            :         }
+<span class="lineNum">     337 </span>            :         if(type == JSON_STR)
+<span class="lineNum">     338 </span>            :         {
+<span class="lineNum">     339 </span>            :                 printf(&quot;\&quot;%s\&quot;&quot;, json-&gt;TYPE.str);
+<span class="lineNum">     340 </span>            :         }
+<span class="lineNum">     341 </span>            :         if(type == JSON_ARRAY)
+<span class="lineNum">     342 </span>            :         {
+<span class="lineNum">     343 </span>            :                 int cnt = json-&gt;TYPE.arr-&gt;val.size();
+<span class="lineNum">     344 </span>            :                 printf(&quot;\n&quot;);
+<span class="lineNum">     345 </span>            :                 for(int i=0;i&lt;step;++i)
+<span class="lineNum">     346 </span>            :                         printf(&quot; &quot;);
+<span class="lineNum">     347 </span>            :                 printf(&quot;[&quot;);
+<span class="lineNum">     348 </span>            :                 for(int i = 0; i &lt; cnt; i++)
+<span class="lineNum">     349 </span>            :                 {
+<span class="lineNum">     350 </span>            :                         dfs_print(json-&gt;TYPE.arr-&gt;val[i], step+1);
+<span class="lineNum">     351 </span>            :                         if(i != cnt - 1)printf(&quot;,&quot;);
+<span class="lineNum">     352 </span>            :                 }
+<span class="lineNum">     353 </span>            :                 printf(&quot;\n&quot;);
+<span class="lineNum">     354 </span>            :                 for(int i=0;i&lt;step;++i)
+<span class="lineNum">     355 </span>            :                         printf(&quot; &quot;);
+<span class="lineNum">     356 </span>            :                 printf(&quot;]&quot;);
+<span class="lineNum">     357 </span>            :         }
+<span class="lineNum">     358 </span>            :         if(type == JSON_OBJ)
+<span class="lineNum">     359 </span>            :         {
+<span class="lineNum">     360 </span>            :                 int cnt = json-&gt;TYPE.obj-&gt;pair.size();
+<span class="lineNum">     361 </span>            :                 printf(&quot;\n&quot;);
+<span class="lineNum">     362 </span>            :                 for(int i=0;i&lt;step;++i)
+<span class="lineNum">     363 </span>            :                         printf(&quot; &quot;);
+<span class="lineNum">     364 </span>            :                 printf(&quot;{&quot;);
+<span class="lineNum">     365 </span>            :                 for(int i = 0; i &lt; cnt; i++)
+<span class="lineNum">     366 </span>            :                 {
+<span class="lineNum">     367 </span>            :                         printf(&quot;\&quot;%s\&quot;:&quot;, json-&gt;TYPE.obj-&gt;pair[i]-&gt;key);
+<span class="lineNum">     368 </span>            :                         dfs_print(json-&gt;TYPE.obj-&gt;pair[i]-&gt;val, step+1);
+<span class="lineNum">     369 </span>            :                         if(i != cnt - 1) printf(&quot;,&quot;);
+<span class="lineNum">     370 </span>            :                 }
+<span class="lineNum">     371 </span>            :                 printf(&quot;\n&quot;);
+<span class="lineNum">     372 </span>            :                 for(int i=0;i&lt;step;++i)
+<span class="lineNum">     373 </span>            :                         printf(&quot; &quot;);
+<span class="lineNum">     374 </span>            :                 printf(&quot;}&quot;);
+<span class="lineNum">     375 </span>            :         }
+<span class="lineNum">     376 </span>            : }
+<span class="lineNum">     377 </span>            : void menu()
+<span class="lineNum">     378 </span>            : {
+<span class="lineNum">     379 </span>            :         printf(&quot;\n&quot;);
+<span class="lineNum">     380 </span>            :         printf(&quot;请输入一个选项\n&quot;);
+<span class="lineNum">     381 </span>            :         printf(&quot;1.增加一个json的键值对\n&quot;);
+<span class="lineNum">     382 </span>            :         printf(&quot;2.得到对应key的json字段\n&quot;);
+<span class="lineNum">     383 </span>            :         printf(&quot;3.得到对应数组下标的json字段\n&quot;);
+<span class="lineNum">     384 </span>            :         printf(&quot;4.查找key对应的整型value\n&quot;);
+<span class="lineNum">     385 </span>            :         printf(&quot;5.查找key对应的布尔value\n&quot;);
+<span class="lineNum">     386 </span>            :         printf(&quot;6.查找key对应的字符串value\n&quot;);
+<span class="lineNum">     387 </span>            :         printf(&quot;7.查找key对应的数组value\n&quot;);
+<span class="lineNum">     388 </span>            :         printf(&quot;8.修改key对应的整型value\n&quot;);
+<span class="lineNum">     389 </span>            :         printf(&quot;9.修改key对应的布尔value\n&quot;);
+<span class="lineNum">     390 </span>            :         printf(&quot;10.修改key对应的字符串value\n&quot;);
+<span class="lineNum">     391 </span>            :         printf(&quot;11.打印json\n&quot;);
+<span class="lineNum">     392 </span>            :         printf(&quot;12.add_value\n&quot;);
+<span class="lineNum">     393 </span>            :         printf(&quot;13.预留\n&quot;);
+<span class="lineNum">     394 </span>            :         printf(&quot;14.exit\n&quot;);
+<span class="lineNum">     395 </span>            : }
+<span class="lineNum">     396 </span>            : 
+<span class="lineNum">     397 </span>            : int _main()
+<span class="lineNum">     398 </span>            : {
+<span class="lineNum">     399 </span>            :         int op=0;
+<span class="lineNum">     400 </span>            :         char key[MAXN];
+<span class="lineNum">     401 </span>            :         JSON *json=NULL;
+<span class="lineNum">     402 </span>            :         json=(JSON *)json_create();
+<span class="lineNum">     403 </span>            :         while(1)
+<span class="lineNum">     404 </span>            :         {
+<span class="lineNum">     405 </span>            :                 menu();
+<span class="lineNum">     406 </span>            :                 scanf(&quot;%d&quot;, &amp;op);
+<span class="lineNum">     407 </span>            :                 switch(op)
+<span class="lineNum">     408 </span>            :                 {
+<span class="lineNum">     409 </span>            :                         case 1:{ 
+<span class="lineNum">     410 </span>            :                                        if(json-&gt;TYPE.obj==NULL)
+<span class="lineNum">     411 </span>            :                                                json-&gt;TYPE.obj=new object();
+<span class="lineNum">     412 </span>            :                                        json-&gt;TYPE.obj-&gt;pair.push_back((keyvalue *)json_add_keyvalue(json));
+<span class="lineNum">     413 </span>            :                                        break;
+<span class="lineNum">     414 </span>            :                                }
+<span class="lineNum">     415 </span>            :                         case 2: 
+<span class="lineNum">     416 </span>            :                                scanf(&quot;%s&quot;, key);
+<span class="lineNum">     417 </span>            :                                json_get_value(json, key);break;
+<span class="lineNum">     418 </span>            :                              case 3: json_get_index();break;
+<span class="lineNum">     419 </span>            :                                  case 4: json_get_int();break;
+<span class="lineNum">     420 </span>            :                                  case 5: json_get_bool();break;
+<span class="lineNum">     421 </span>            :                                  case 6: json_get_str();break;
+<span class="lineNum">     422 </span>            :                                  case 7: json_get_index();break;
+<span class="lineNum">     423 </span>            :                                  case 8: json_set_int();break;
+<span class="lineNum">     424 </span>            :                                  case 9: json_set_bool();break;
+<span class="lineNum">     425 </span>            :                                  case 10: json_set_str();break;
+<span class="lineNum">     426 </span>            :                         case 11: dfs_print(json, 0);break;
+<span class="lineNum">     427 </span>            :                         case 12: {
+<span class="lineNum">     428 </span>            :                                          JSON *val=new JSON();
+<span class="lineNum">     429 </span>            :                                          val=(JSON *)make_value(json);
+<span class="lineNum">     430 </span>            :                                          json=(JSON*)json_add_value(json, val);
+<span class="lineNum">     431 </span>            :                                  }break;
+<span class="lineNum">     432 </span>            :                         case 13: break;
+<span class="lineNum">     433 </span>            :                         case 14: return 0;
+<span class="lineNum">     434 </span>            :                         default:
+<span class="lineNum">     435 </span>            :                                  {
+<span class="lineNum">     436 </span>            :                                          perror(&quot;wrong input\n&quot;);
+<span class="lineNum">     437 </span>            :                                          continue;
+<span class="lineNum">     438 </span>            :                                  }
+<span class="lineNum">     439 </span>            :                 }
+<span class="lineNum">     440 </span>            :         }
+<span class="lineNum">     441 </span>            :         json_free(json);
+<span class="lineNum">     442 </span>            :         return 0;
+<span class="lineNum">     443 </span>            : } 
+<span class="lineNum">     444 </span>            : */
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
